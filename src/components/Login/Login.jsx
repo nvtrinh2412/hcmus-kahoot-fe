@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FieldValues } from "react-hook-form";
 import axiosConfig from "../../services/axiosConfig";
 import queryString from "query-string";
+import logo from "./Kahoot-Logo.png";
 import {
   validateLoginSchema,
   validateSignUpSchema,
@@ -123,7 +124,7 @@ const Login = ({ isOpen, setOpen }) => {
           onClick={() => setOpen(!isOpen)}
           aria-hidden></div>
         <div className="login__logo">
-          <img src="/images/kahoot-logo.png" alt="Kahoot brand" />
+          <img src={logo} alt="logo" />
         </div>
         <form
           className="login__form"
