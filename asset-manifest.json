@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/hcmus-kahoot-fe/static/css/main.44b51ef0.css",
-    "main.js": "/hcmus-kahoot-fe/static/js/main.7f336fac.js",
-    "static/media/kahoot-background.png": "/hcmus-kahoot-fe/static/media/kahoot-background.8b0e8ff05769994efd52.png",
-    "static/media/Kahoot-Logo.png": "/hcmus-kahoot-fe/static/media/Kahoot-Logo.31277594a18f97a80d5c.png",
+    "main.css": "/hcmus-kahoot-fe/static/css/main.91145f8c.css",
+    "main.js": "/hcmus-kahoot-fe/static/js/main.55ab9025.js",
+    "static/media/kahoot-auth-background.png": "/hcmus-kahoot-fe/static/media/kahoot-auth-background.8b0e8ff05769994efd52.png",
+    "static/media/kahoot-home.png": "/hcmus-kahoot-fe/static/media/kahoot-home.4125baf1a605bd384c1d.png",
     "index.html": "/hcmus-kahoot-fe/index.html",
-    "main.44b51ef0.css.map": "/hcmus-kahoot-fe/static/css/main.44b51ef0.css.map",
-    "main.7f336fac.js.map": "/hcmus-kahoot-fe/static/js/main.7f336fac.js.map"
+    "main.91145f8c.css.map": "/hcmus-kahoot-fe/static/css/main.91145f8c.css.map",
+    "main.55ab9025.js.map": "/hcmus-kahoot-fe/static/js/main.55ab9025.js.map"
   },
   "entrypoints": [
-    "static/css/main.44b51ef0.css",
-    "static/js/main.7f336fac.js"
+    "static/css/main.91145f8c.css",
+    "static/js/main.55ab9025.js"
   ]
 }
