@@ -1,0 +1,7 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.home {
+  @include flex(center, center);
+  @include defaultBackground("kahoot-home.png");
+}

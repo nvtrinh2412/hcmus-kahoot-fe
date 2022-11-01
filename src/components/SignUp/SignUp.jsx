@@ -4,14 +4,26 @@ import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FieldValues } from "react-hook-form";
 import axiosConfig from "../../services/axiosConfig";
-import { validateLoginSchema } from "../../models/validateFormSchema";
-import "./Login.scss";
+import queryString from "query-string";
+import { validateSignUpSchema } from "../../models/validateFormSchema";
+import "./SignUp.scss";
 import { Link } from "react-router-dom";
 
+const SUCCESS_SIGN_UP_MESSAGE = "Success! Try to log in now!";
 const SUCCESS_LOG_IN_MESSAGE = "Login successfully";
 const ERROR_LOG_IN_MESSAGE = "Email or password is incorrect";
-const FORM_LOGIN = {
+const FORM_SIGN_UP = {
   data: [
+    {
+      type: "firstName",
+      title: "First name",
+      placeholder: "Nguyen",
+    },
+    {
+      type: "lastName",
+      title: "Last name",
+      placeholder: "Trinh",
+    },
     {
       type: "email",
       title: "Email",
@@ -24,14 +36,14 @@ const FORM_LOGIN = {
     },
   ],
   button: {
-    title: "Login",
-    target: "/login",
-    option: "Sign up",
+    title: "Sign up",
+    target: "/registration",
+    option: "Login",
     message: "Don’t have an account?",
   },
 };
 
-const Login = ({ isOpen, setOpen }) => {
+const SignUp = ({ isOpen, setOpen }) => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -44,63 +56,66 @@ const Login = ({ isOpen, setOpen }) => {
     formState: { errors },
     reset,
   } = useForm({
-    resolver: yupResolver(validateLoginSchema),
+    resolver: yupResolver(validateSignUpSchema),
   });
+  const handleChangeForm = () => {
+    reset();
+    setIsError(false);
+    setIsSuccess(false);
+  };
 
   const handleSubmitForm = async (data) => {
-    const targetUrl = "auth/login";
+    const targetUrl = "/auth/register";
     setLoading(true);
-    const submitData = new URLSearchParams(data);
+    const submitData = queryString.stringify(data);
     await axiosConfig
       .post(targetUrl, submitData)
       .then((res) => {
         if (res?.error) {
           setIsSuccess(false);
           setIsError(true);
-          setErrorMessage(
-            ERROR_LOG_IN_MESSAGE ? ERROR_LOG_IN_MESSAGE : res.message
-          );
+          setErrorMessage(res.message);
         } else {
           setIsError(false);
           setIsSuccess(true);
-          setSuccessMessage(SUCCESS_LOG_IN_MESSAGE);
+          setSuccessMessage(SUCCESS_SIGN_UP_MESSAGE);
         }
       })
       .finally(() => setLoading(false));
   };
   return (
-    <div className="login">
-      <div className="login__container">
+    <div className="signUp">
+      <div className="signUp__container">
         <div
-          className="login__close-tag"
+          className="signUp__close-tag"
           onClick={() => setOpen(!isOpen)}
           aria-hidden></div>
-        <div className="login__logo">
+        <div className="signUp__logo">
           <img
             src={process.env.PUBLIC_URL + "/images/kahoot-logo.png"}
             alt="logo"
           />
         </div>
         <form
-          className="login__form"
+          className="signUp__form"
           onSubmit={handleSubmit((data) => handleSubmitForm(data))}>
-          {FORM_LOGIN.data.map((item) => {
+          {FORM_SIGN_UP.data.map((item) => {
             const { type, title, placeholder } = item;
             const validateErrorMessage = errors[type]?.message;
             return (
-              <div className="login__form-item">
-                <label className="login__form-item-label" htmlFor={type}>
+              <div className="signUp__form-item">
+                <label className="signUp__form-item-label" htmlFor={type}>
                   {title}
                 </label>
                 <input
-                  className="login__form-item-input"
+                  className="signUp__form-item-input"
                   type={type === "password" ? "password" : "text"}
                   id={type}
                   placeholder={placeholder}
                   {...register(type, { required: true })}
                 />
                 {validateErrorMessage && (
-                  <span className="login__form-item--error">
+                  <span className="signUp__form-item--error">
                     {validateErrorMessage}
                   </span>
                 )}
@@ -108,11 +123,11 @@ const Login = ({ isOpen, setOpen }) => {
             );
           })}
 
-          <div className="login__form-submit-result">
+          <div className="signUp__form-submit-result">
             {isError && (
               <>
-                <RiErrorWarningFill className="login__form-submit-result-status--error" />
-                <span className="login__form-submit-result-message--error">
+                <RiErrorWarningFill className="signUp__form-submit-result-status--error" />
+                <span className="signUp__form-submit-result-message--error">
                   {" "}
                   {errorMessage}
                 </span>
@@ -120,8 +135,8 @@ const Login = ({ isOpen, setOpen }) => {
             )}
             {isSuccess && (
               <>
-                <IoCheckmarkDoneCircleSharp className="login__form-submit-result-status--success" />
-                <span className="login__form-submit-result-message--success">
+                <IoCheckmarkDoneCircleSharp className="signUp__form-submit-result-status--success" />
+                <span className="signUp__form-submit-result-message--success">
                   {" "}
                   {successMessage}
                 </span>
@@ -129,17 +144,17 @@ const Login = ({ isOpen, setOpen }) => {
             )}
           </div>
 
-          <button className="login__form-button" type="submit">
-            {loading ? "Please wait..." : FORM_LOGIN.button.title}
+          <button className="signUp__form-button" type="submit">
+            {loading ? "Please wait..." : FORM_SIGN_UP.button.title}
           </button>
 
-          <div className="login__form-option">
-            <span> {FORM_LOGIN.button.message}</span>
+          <div className="signUp__form-option">
+            <span> {FORM_SIGN_UP.button.message}</span>
             <Link
-              className="login__form-option-link"
-              to="/auth/sign-up"
+              className="signUp__form-option-link"
+              to="/auth/login"
               aria-hidden>
-              {FORM_LOGIN.button.option}
+              {FORM_SIGN_UP.button.option}
             </Link>
           </div>
         </form>
@@ -148,4 +163,4 @@ const Login = ({ isOpen, setOpen }) => {
   );
 };
 
-export default Login;
+export default SignUp;

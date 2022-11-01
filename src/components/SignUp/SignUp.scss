@@ -1,9 +1,10 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
 
-.login {
+.signUp {
   @include flex(center, center);
   @include defaultBackground("kahoot-auth-background.png");
+
   &__container {
     @include flex(center, center);
     flex-direction: column;
